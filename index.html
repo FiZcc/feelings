@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanctuary • A Peaceful Escape</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Background Animation -->
+        <div class="background">
+            <div class="clouds"></div>
+            <div class="floating-particles"></div>
+            <div class="gradient-overlay"></div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h1 class="title">Sanctuary</h1>
+                <p class="subtitle">A gentle space for peace</p>
+            </header>
+
+            <!-- Floating Elements -->
+            <div class="floating-elements">
+                <div class="bubble bubble-1"></div>
+                <div class="bubble bubble-2"></div>
+                <div class="bubble bubble-3"></div>
+                <div class="feather feather-1"></div>
+                <div class="feather feather-2"></div>
+            </div>
+
+            <!-- Interactive Sections -->
+            <section class="interactive-area">
+                <!-- Breathing Circle -->
+                <div class="breathing-container">
+                    <div class="breathing-circle"></div>
+                    <p class="breathing-text">Breathe with me</p>
+                </div>
+
+                <!-- Interactive Elements -->
+                <div class="elements-grid">
+                    <!-- Clickable Items -->
+                    <div class="interactive-item" data-action="stars">
+                        <div class="item-icon">✨</div>
+                        <p>Make a wish</p>
+                    </div>
+
+                    <div class="interactive-item" data-action="heart">
+                        <div class="item-icon">💫</div>
+                        <p>Feel the glow</p>
+                    </div>
+
+                    <div class="interactive-item" data-action="sparkle">
+                        <div class="item-icon">🎀</div>
+                        <p>Gentle touch</p>
+                    </div>
+
+                    <div class="interactive-item" data-action="rain">
+                        <div class="item-icon">🌧️</div>
+                        <p>Soft sounds</p>
+                    </div>
+                </div>
+
+                <!-- Affirmation Display -->
+                <div class="affirmation-box">
+                    <p class="affirmation">You are safe here. Take all the time you need.</p>
+                </div>
+
+                <!-- Music Toggle -->
+                <div class="audio-control">
+                    <button id="audio-toggle" class="audio-btn">🎵 Ambient Sounds</button>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <p>Welcome to your sanctuary</p>
+            </footer>
+        </main>
+
+        <!-- Hidden Audio Elements -->
+        <audio id="ambient-audio" preload="none">
+            <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA==" type="audio/wav">
+        </audio>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
