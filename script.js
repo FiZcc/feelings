@@ -63,7 +63,6 @@ function drawConnections() {
 }
 
 function animate() {
-    // Clear with fade effect
     ctx.fillStyle = 'rgba(15, 15, 15, 0.1)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -79,124 +78,80 @@ function animate() {
 initParticles();
 animate();
 
-// Resize handler
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 });
 
-// Wait for DOM to be ready
-function setupNavigation() {
+// Navigation
+function initNav() {
     const enterBtn = document.getElementById('enterBtn');
     const resetBtn = document.getElementById('resetBtn');
-    const introSection = document.getElementById('intro');
-    const confessionsSection = document.getElementById('confessions');
+    const intro = document.getElementById('intro');
+    const confessions = document.getElementById('confessions');
 
-    if (!enterBtn || !resetBtn || !introSection || !confessionsSection) {
-        console.error('Navigation elements not found');
-        return;
+    if (enterBtn) {
+        enterBtn.onclick = function() {
+            intro.style.display = 'none';
+            confessions.style.display = 'block';
+        };
     }
 
-    enterBtn.addEventListener('click', () => {
-        introSection.style.display = 'none';
-        confessionsSection.style.display = 'block';
-        window.scrollTo(0, 0);
-    });
-
-    resetBtn.addEventListener('click', () => {
-        // Reset all cards
-        document.querySelectorAll('.confession-card').forEach(card => {
-            card.classList.remove('flipped');
-        });
-        
-        introSection.style.display = 'flex';
-        confessionsSection.style.display = 'none';
-        window.scrollTo(0, 0);
-    });
-}
-
-// Setup navigation when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupNavigation);
-} else {
-    setupNavigation();
-}
-
-// Card Flip Logic
-document.addEventListener('click', (e) => {
-    const card = e.target.closest('.confession-card');
-    if (!card) return;
-
-    // Don't flip if clicking close button
-    if (e.target.classList.contains('close-card')) {
-        card.classList.remove('flipped');
-        return;
+    if (resetBtn) {
+        resetBtn.onclick = function() {
+            document.querySelectorAll('.confession-card').forEach(card => {
+                card.classList.remove('flipped');
+            });
+            intro.style.display = 'flex';
+            confessions.style.display = 'none';
+        };
     }
+}
 
-    card.classList.toggle('flipped');
-});
+document.addEventListener('DOMContentLoaded', initNav);
+if (document.readyState === 'complete') {
+    initNav();
+}
 
-// Close button functionality
-document.addEventListener('click', (e) => {
+// Card interactions
+document.addEventListener('click', function(e) {
     if (e.target.classList.contains('close-card')) {
         e.stopPropagation();
         const card = e.target.closest('.confession-card');
-        if (card) {
-            card.classList.remove('flipped');
-        }
+        if (card) card.classList.remove('flipped');
+        return;
+    }
+
+    const card = e.target.closest('.confession-card');
+    if (card && !e.target.classList.contains('close-card')) {
+        card.classList.toggle('flipped');
     }
 });
 
-// Smooth scroll for reflection section
-document.addEventListener('scroll', () => {
-    const reflection = document.querySelector('.reflection');
-    if (reflection) {
-        const scrollPos = window.scrollY;
-        const elementPos = reflection.offsetTop;
-        const distance = elementPos - scrollPos;
-
-        if (distance < window.innerHeight && distance > 0) {
-            reflection.style.opacity = Math.min(1, (window.innerHeight - distance) / 200);
-        }
-    }
-});
-
-// Keyboard shortcuts
+// Escape to close cards
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        const confessionsSection = document.getElementById('confessions');
-        if (confessionsSection && confessionsSection.style.display === 'block') {
-            document.querySelectorAll('.confession-card.flipped').forEach(card => {
-                card.classList.remove('flipped');
-            });
-        }
+        document.querySelectorAll('.confession-card.flipped').forEach(card => {
+            card.classList.remove('flipped');
+        });
     }
 });
 
-// Add subtle mouse following effect to cards
+// Mouse tilt effect
 document.addEventListener('mousemove', (e) => {
     const cards = document.querySelectorAll('.confession-card');
     cards.forEach(card => {
         const rect = card.getBoundingClientRect();
-        const cardCenterX = rect.left + rect.width / 2;
-        const cardCenterY = rect.top + rect.height / 2;
-
-        const angleToMouse = Math.atan2(e.clientY - cardCenterY, e.clientX - cardCenterX);
-        const distance = Math.hypot(e.clientX - cardCenterX, e.clientY - cardCenterY);
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+        const distance = Math.hypot(e.clientX - centerX, e.clientY - centerY);
 
         if (distance < 300) {
-            const tilt = (Math.sin(angleToMouse) * 5);
+            const tilt = Math.sin(angle) * 5;
             card.style.transform = `perspective(1000px) rotateZ(${tilt}deg)`;
         } else {
             card.style.transform = 'perspective(1000px) rotateZ(0deg)';
         }
-    });
-});
-
-// Add depth to cards on load
-window.addEventListener('load', () => {
-    const cards = document.querySelectorAll('.confession-card');
-    cards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
     });
 });
