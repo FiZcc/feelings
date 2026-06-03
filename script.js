@@ -85,45 +85,66 @@ window.addEventListener('resize', () => {
     canvas.height = window.innerHeight;
 });
 
-// Navigation Logic
-const enterBtn = document.getElementById('enterBtn');
-const resetBtn = document.getElementById('resetBtn');
-const introSection = document.getElementById('intro');
-const confessionsSection = document.getElementById('confessions');
+// Wait for DOM to be ready
+function setupNavigation() {
+    const enterBtn = document.getElementById('enterBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const introSection = document.getElementById('intro');
+    const confessionsSection = document.getElementById('confessions');
 
-enterBtn.addEventListener('click', () => {
-    introSection.style.display = 'none';
-    confessionsSection.style.display = 'block';
-});
+    if (!enterBtn || !resetBtn || !introSection || !confessionsSection) {
+        console.error('Navigation elements not found');
+        return;
+    }
 
-resetBtn.addEventListener('click', () => {
-    // Reset all cards
-    document.querySelectorAll('.confession-card').forEach(card => {
-        card.classList.remove('flipped');
+    enterBtn.addEventListener('click', () => {
+        introSection.style.display = 'none';
+        confessionsSection.style.display = 'block';
+        window.scrollTo(0, 0);
     });
-    
-    introSection.style.display = 'flex';
-    confessionsSection.style.display = 'none';
-});
+
+    resetBtn.addEventListener('click', () => {
+        // Reset all cards
+        document.querySelectorAll('.confession-card').forEach(card => {
+            card.classList.remove('flipped');
+        });
+        
+        introSection.style.display = 'flex';
+        confessionsSection.style.display = 'none';
+        window.scrollTo(0, 0);
+    });
+}
+
+// Setup navigation when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupNavigation);
+} else {
+    setupNavigation();
+}
 
 // Card Flip Logic
-document.querySelectorAll('.confession-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-        // Don't flip if clicking close button
-        if (e.target.classList.contains('close-card')) {
-            card.classList.remove('flipped');
-            return;
-        }
+document.addEventListener('click', (e) => {
+    const card = e.target.closest('.confession-card');
+    if (!card) return;
 
-        card.classList.toggle('flipped');
-    });
-
-    // Close button functionality
-    const closeBtn = card.querySelector('.close-card');
-    closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
+    // Don't flip if clicking close button
+    if (e.target.classList.contains('close-card')) {
         card.classList.remove('flipped');
-    });
+        return;
+    }
+
+    card.classList.toggle('flipped');
+});
+
+// Close button functionality
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('close-card')) {
+        e.stopPropagation();
+        const card = e.target.closest('.confession-card');
+        if (card) {
+            card.classList.remove('flipped');
+        }
+    }
 });
 
 // Smooth scroll for reflection section
@@ -143,7 +164,8 @@ document.addEventListener('scroll', () => {
 // Keyboard shortcuts
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        if (confessionsSection.style.display === 'block') {
+        const confessionsSection = document.getElementById('confessions');
+        if (confessionsSection && confessionsSection.style.display === 'block') {
             document.querySelectorAll('.confession-card.flipped').forEach(card => {
                 card.classList.remove('flipped');
             });
@@ -177,12 +199,4 @@ window.addEventListener('load', () => {
     cards.forEach((card, index) => {
         card.style.animationDelay = `${index * 0.1}s`;
     });
-});
-
-// Add some interactivity to intro on load
-window.addEventListener('load', () => {
-    const title = document.querySelector('.title');
-    if (title) {
-        title.style.animation = 'fadeIn 1.2s ease-out';
-    }
 });
