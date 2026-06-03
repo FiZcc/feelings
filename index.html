@@ -3,88 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanctuary • A Peaceful Escape</title>
+    <title>Confessions</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Background Animation -->
+    <div class="scene">
+        <!-- Background Elements -->
         <div class="background">
-            <div class="clouds"></div>
-            <div class="floating-particles"></div>
-            <div class="gradient-overlay"></div>
+            <canvas id="canvas"></canvas>
+            <div class="texture"></div>
         </div>
 
         <!-- Main Content -->
-        <main class="main-content">
-            <!-- Header -->
-            <header class="header">
-                <h1 class="title">Sanctuary</h1>
-                <p class="subtitle">A gentle space for peace</p>
-            </header>
-
-            <!-- Floating Elements -->
-            <div class="floating-elements">
-                <div class="bubble bubble-1"></div>
-                <div class="bubble bubble-2"></div>
-                <div class="bubble bubble-3"></div>
-                <div class="feather feather-1"></div>
-                <div class="feather feather-2"></div>
-            </div>
-
-            <!-- Interactive Sections -->
-            <section class="interactive-area">
-                <!-- Breathing Circle -->
-                <div class="breathing-container">
-                    <div class="breathing-circle"></div>
-                    <p class="breathing-text">Breathe with me</p>
+        <main class="main">
+            <!-- Intro Section -->
+            <section class="intro" id="intro">
+                <div class="intro-content">
+                    <h1 class="title">confessions</h1>
+                    <p class="subtitle">a space where it's safe to be small</p>
+                    <div class="divider"></div>
+                    <p class="description">
+                        these are the things i couldn't say out loud.<br>
+                        the moments when i felt too much.<br>
+                        when i needed to regress, to let go.
+                    </p>
                 </div>
-
-                <!-- Interactive Elements -->
-                <div class="elements-grid">
-                    <!-- Clickable Items -->
-                    <div class="interactive-item" data-action="stars">
-                        <div class="item-icon">✨</div>
-                        <p>Make a wish</p>
-                    </div>
-
-                    <div class="interactive-item" data-action="heart">
-                        <div class="item-icon">💫</div>
-                        <p>Feel the glow</p>
-                    </div>
-
-                    <div class="interactive-item" data-action="sparkle">
-                        <div class="item-icon">🎀</div>
-                        <p>Gentle touch</p>
-                    </div>
-
-                    <div class="interactive-item" data-action="rain">
-                        <div class="item-icon">🌧️</div>
-                        <p>Soft sounds</p>
-                    </div>
-                </div>
-
-                <!-- Affirmation Display -->
-                <div class="affirmation-box">
-                    <p class="affirmation">You are safe here. Take all the time you need.</p>
-                </div>
-
-                <!-- Music Toggle -->
-                <div class="audio-control">
-                    <button id="audio-toggle" class="audio-btn">🎵 Ambient Sounds</button>
-                </div>
+                <button class="enter-btn" id="enterBtn">enter</button>
             </section>
 
-            <!-- Footer -->
-            <footer class="footer">
-                <p>Welcome to your sanctuary</p>
-            </footer>
-        </main>
+            <!-- Confession Cards -->
+            <section class="confessions" id="confessions" style="display: none;">
+                <div class="cards-container">
+                    <!-- Card 1 -->
+                    <div class="confession-card" data-index="0">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <h3>sometimes i just want to disappear</h3>
+                                <p class="card-hint">click to reveal</p>
+                            </div>
+                            <div class="card-back">
+                                <p>not forever. just for a moment. when the world feels too loud and i'm too small to handle it. i want to curl up and let someone else carry the weight. is that childish? maybe. but it's honest.</p>
+                                <button class="close-card">×</button>
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- Hidden Audio Elements -->
-        <audio id="ambient-audio" preload="none">
-            <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA==" type="audio/wav">
-        </audio>
+                    <!-- Card 2 -->
+                    <div class="confession-card" data-index="1">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <h3>i cry more than i admit</h3>
+                                <p class="card-hint">click to reveal</p>
+                            </div>
+                            <div class="card-back">
+                                <p>tears come easily when i'm alone. for things that happened years ago. for people i've lost. for the version of myself i'm trying to protect. i think crying is where i'm most honest. where the mask slips.</p>
+                                <button class="close-card">×</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="confession-card" data-index="2">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <h3>i'm afraid of being too much</h3>
+                                <p class="card-hint">click to reveal</p>
+                            </div>
+                            <div class="card-back">
+                                <p>my feelings are big. my needs are real. but somewhere i learned that being myself meant being a burden. so i shrink. i apologize for existing loudly. i'm learning that love isn't about making yourself smaller.</p>
+                                <button class="close-card">×</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="confession-card" data-index="3">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <h3>i want to be taken care of</h3>
+                                <p class="card-hint">click to reveal</p>
+                            </div>
+                            <div class="card-back">
+                                <p>is it weak to want someone to hold me and tell me everything will be okay? to want to not be the strong one for a while? i've been carrying myself for so long. sometimes i just want to rest.</p>
+                                <button class="close-card">×</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="confession-card" data-index="4">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <h3>regression isn't weakness</h3>
+                                <p class="card-hint">click to reveal</p>
+                            </div>
+                            <div class="card-back">
+                                <p>when i let myself be small, when i'm vulnerable, when i shed the adult weight... i feel more real. not broken. not damaged. just honest. it's the only time i don't have to perform.</p>
+                                <button class="close-card">×</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="confession-card" data-index="5">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <h3>i'm learning to forgive myself</h3>
+                                <p class="card-hint">click to reveal</p>
+                            </div>
+                            <div class="card-back">
+                                <p>for needing softness. for being human. for not being perfect. for taking up space. for having needs. for being scared sometimes. for not having it all figured out. forgiveness starts here, with myself.</p>
+                                <button class="close-card">×</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reflection">
+                    <p>these confessions are a mirror. they're not just mine. they might be yours too.</p>
+                </div>
+
+                <button class="reset-btn" id="resetBtn">start over</button>
+            </section>
+        </main>
     </div>
 
     <script src="script.js"></script>
